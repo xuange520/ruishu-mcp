@@ -39,7 +39,7 @@
 
 ```bash
 # 1. 克隆代码库 / Clone the repository
-git clone https://github.com/your-username/ruishu-mcp.git
+git clone https://github.com/xuange925/ruishu-mcp.git
 cd ruishu-mcp
 
 # 2. 安装依赖 / Install dependencies
@@ -91,20 +91,20 @@ Add the current MCP service to your AI Agent's configuration file (e.g., Antigra
 一旦配置成功，AI 助手将获得以下三种核心能力（Tools）：
 Once configured, your AI assistant will gain the following core tools:
 
-1. **`init_ruishu_hook`**: 指挥浏览器锁定目标网站，自动执行 Service Worker 绕过与原型链隐蔽注入，然后刷新页面等待特征校验。
-2. **`execute_page_action`**: 模拟人类交互（鼠标点击、下拉、触发特定 JS 函数），用于激活被动的发包请求。
-3. **`get_intercepted_traffic`**: 读取净化后、包含加密明文双重对照的 HTTP 流量栈日志。
+1. **`init_ruishu_hook`**: 指挥浏览器锁定目标网站，自动执行 Service Worker 绕过与原型链隐蔽注入，然后刷新页面等待特征校验。 / Instruct the browser to lock onto the target website, automatically execute Service Worker bypass and stealth prototype injection, then refresh the page to wait for feature validation.
+2. **`execute_page_action`**: 模拟人类交互（鼠标点击、下拉、触发特定 JS 函数），用于激活被动的发包请求。 / Simulate human interaction (mouse clicks, scrolling, triggering specific JS functions) to activate passive request generation.
+3. **`get_intercepted_traffic`**: 读取净化后、包含加密明文双重对照的 HTTP 流量栈日志。 / Read the purified HTTP traffic stack logs, which contain a dual-reference of both encrypted and plaintext data.
 
 ---
 
 ## 🧠 技术原理 / Architecture
 
 1. **CDP God Mode (上帝视角)**
-   本工具通过 `Network.requestWillBeSent` 和 `Network.responseReceived` 记录请求最底层的原始发包，确保加密逻辑不被漏过。
+   本工具通过 `Network.requestWillBeSent` 和 `Network.responseReceived` 记录请求最底层的原始发包，确保加密逻辑不被漏过。 / This tool records the ultimate original network requests at the lowest layer using `Network.requestWillBeSent` and `Network.responseReceived`, ensuring no encryption logic is missed.
 2. **XHR/Fetch Hijacking (前端原理解密)**
-   前端通过覆盖 `XMLHttpRequest.prototype.send` 和 `XMLHttpRequest.prototype.open`，配合双重 `readystatechange` 生命周期捕捉，当页面本身的业务 JS 解除请求加密体时，将其瞬间拦截。
+   前端通过覆盖 `XMLHttpRequest.prototype.send` 和 `XMLHttpRequest.prototype.open`，配合双重 `readystatechange` 生命周期捕捉，当页面本身的业务 JS 解除请求加密体时，将其瞬间拦截。 / The frontend overrides `XMLHttpRequest.prototype.send` and `.open`. By pairing this with dual `readystatechange` lifecycle captures, it instantly intercepts the data the moment the page's own business JS decrypts the request payload.
 3. **Asynchronous Memory Queue (异步内存队列)**
-   由于网页前端收集明文与 Node 端 CDP 层收集密文存在时空差异，本工具通过巧妙的微任务 (Microtask) 与 `__mcp_intercept_queue` 全局双向队列，安全地将数据原子化传输回 Node 服务。
+   由于网页前端收集明文与 Node 端 CDP 层收集密文存在时空差异，本工具通过巧妙的微任务 (Microtask) 与 `__mcp_intercept_queue` 全局双向队列，安全地将数据原子化传输回 Node 服务。 / Due to the temporal and spatial differences between plaintext collection on the frontend and ciphertext collection at the Node CDP layer, this tool safely and atomically transfers data back to the Node service via ingenious Microtasks and a global bidirectional queue named `__mcp_intercept_queue`.
 
 ---
 
