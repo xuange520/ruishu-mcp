@@ -16,14 +16,19 @@ To ensure the international vision and professional hacker standards of this pro
 ### 🖋️ 排版规范 / Formatting Standards
 
 1. **结构层级 (Structural Hierarchy)**: 
-   先写中文，后写英文。短语或标题使用 ` / ` 直接分隔（如 `简介 / Introduction`）。长段落则中文在前，英文在后自然换行跟进。
-   Write Chinese first, followed by English. For phrases or headers, use ` / ` as a direct separator (e.g., `简介 / Introduction`). For long paragraphs, place the Chinese paragraph first, followed by a line break with the corresponding English paragraph.
+   为提升文档结构的层次感与呼吸感，短语或标题可以使用 ` / ` 直接分隔（如 `简介 / Introduction`）。
+   **对于句子和长段落，请务必先写中文，然后在下一行附带与其对应的英文，并且英文段落必须使用 `*italic*` 斜体呈现。**
+   For short phrases or headers, use ` / ` as a direct separator. For sentences and long paragraphs, place the Chinese text first, followed by the corresponding English text on a new line, and the English text MUST be formatted in `*italic*`.
 
-2. **代码注释 (Code Comments)**: 
+2. **列表与参数 (Lists and Parameters)**: 
+   在列举参数清单时，每一个参数的解释必须按双语排版，建议使用子列表层级展示，避免拥挤。
+   When enumerating parameters, their explanations must be bilingual, preferably displayed using sub-list hierarchies to prevent clutter.
+
+3. **代码注释 (Code Comments)**: 
    核心业务逻辑源码（如 `hooks.ts`, `cdpClient.ts`）的注释同样属于此管辖范围。必须使用全英文，或者标准的中英双语。**绝对禁止提交仅有中文说明的单语代码块。**
    Comments covering core business logic (e.g., `hooks.ts`, `cdpClient.ts`) fall under this jurisdiction as well. They must be written in pure English or standard bilingual format. **Committing monolingual code blocks containing solely Chinese explanations is strictly prohibited.**
 
-3. **专有名词 (Proper Nouns)**:
+4. **专有名词 (Proper Nouns)**:
    对于专有技术名词（如 `Hook`, `CDP`, `Service Worker`, `Token`），中英文描述中必须保持原始英文字符一致。
    For proprietary technical terms (e.g., `Hook`, `CDP`, `Service Worker`, `Token`), the original English characters must be consistently retained in both Chinese and English descriptions.
 
