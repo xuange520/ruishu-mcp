@@ -9,8 +9,8 @@ export class RuishuCdpClient {
     private targetId: string = "";
     public nodeInterceptQueue: any[] = [];
     private pendingResponseCount = 0;
-    private static MAX_QUEUE_LENGTH = 500;
     private static MAX_PENDING_RESPONSES = 50;
+    private static HTTP_TIMEOUT_MS = 10000; // 10s timeout for HTTP/WebSocket connections
 
     /**
      * Ruishu exclusive filtering: Only intercept requests whose URL contains Ruishu dynamic token parameters.
@@ -69,7 +69,7 @@ export class RuishuCdpClient {
         const targetsUrl = `http://${host}:${port}/json`;
         try {
             const targetsData: any[] = await new Promise((resolve, reject) => {
-                http.get(targetsUrl, (res) => {
+                const req = http.get(targetsUrl, (res) => {
                     let data = '';
                     res.on('data', chunk => data += chunk);
                     res.on('end', () => {
@@ -81,6 +81,11 @@ export class RuishuCdpClient {
                         }
                     });
                 }).on('error', reject);
+                // [Security]: Timeout protection to prevent infinite hang when Chrome is unresponsive
+                req.setTimeout(RuishuCdpClient.HTTP_TIMEOUT_MS, () => {
+                    req.destroy();
+                    reject(new Error(`HTTP request to Chrome debug port timed out after ${RuishuCdpClient.HTTP_TIMEOUT_MS}ms`));
+                });
             });
 
             let target = null;
@@ -101,7 +106,13 @@ export class RuishuCdpClient {
             throw new Error(`Failed to fetch targets from HTTP. Ensure Chrome is running with --remote-debugging-port=${port}. ${e.message}`);
         }
 
-        this.client = await CDP({ host: host, port: port, target: this.targetId });
+        // [Security]: Wrap CDP WebSocket connection with timeout to prevent infinite hang
+        this.client = await Promise.race([
+            CDP({ host: host, port: port, target: this.targetId }),
+            new Promise<never>((_, reject) => setTimeout(() => reject(new Error(
+                `CDP WebSocket connection timed out after ${RuishuCdpClient.HTTP_TIMEOUT_MS}ms. Check if Chrome is reachable at ${host}:${port}`
+            )), RuishuCdpClient.HTTP_TIMEOUT_MS))
+        ]);
 
         this.client.on('disconnect', () => {
              console.error("CDP Target Disconnected.");
@@ -126,7 +137,7 @@ export class RuishuCdpClient {
         Network.requestWillBeSent((params: any) => {
             try {
                 if (RuishuCdpClient.isRuishuRequest(params.request.url)) {
-                    if (this.nodeInterceptQueue.length >= RuishuCdpClient.MAX_QUEUE_LENGTH) {
+                    if (this.nodeInterceptQueue.length >= config.maxRecords) {
                         this.nodeInterceptQueue.shift();
                     }
                     this.nodeInterceptQueue.push({
@@ -149,7 +160,7 @@ export class RuishuCdpClient {
                     this.pendingResponseCount++;
                     Network.getResponseBody({ requestId: params.requestId }).then((data: any) => {
                         this.pendingResponseCount--;
-                        if (this.nodeInterceptQueue.length >= RuishuCdpClient.MAX_QUEUE_LENGTH) {
+                        if (this.nodeInterceptQueue.length >= config.maxRecords) {
                             this.nodeInterceptQueue.shift();
                         }
                         this.nodeInterceptQueue.push({
