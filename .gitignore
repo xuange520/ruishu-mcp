@@ -126,3 +126,6 @@ dist
 
 # MCP local configuration
 mcp_config.json
+
+# Core technical defense backup document (Do not upload to GitHub)
+ruishu_defense_penetration_layers.md

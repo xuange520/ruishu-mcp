@@ -185,3 +185,31 @@ main().catch(error => {
     console.error("Fatal Server Startup Error:", error);
     process.exit(1);
 });
+
+// ========================== Graceful Shutdown ==========================
+// Ensure CDP WebSocket connections are properly closed when the process is terminated
+// to prevent zombie listeners on Chrome's debug port.
+async function gracefulShutdown(signal: string) {
+    console.error(`\n[${signal}] Shutting down Ruishu MCP server...`);
+    try {
+        // cdpClient exposes the internal client via connect(); access it to close
+        // Use a tight timeout to avoid hanging the exit
+        await Promise.race([
+            (cdpClient as any).client?.close?.(),
+            new Promise(resolve => setTimeout(resolve, 2000))
+        ]);
+        console.error("CDP connection closed cleanly.");
+    } catch (e) {
+        console.error("CDP cleanup error (non-fatal):", e);
+    }
+    process.exit(0);
+}
+
+process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+
+// [Safety]: Global unhandled rejection catcher to prevent silent crashes on Node.js v23+
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('[FATAL] Unhandled Promise Rejection:', reason);
+    // Do NOT exit — keep the server alive. The MCP protocol will surface the error.
+});

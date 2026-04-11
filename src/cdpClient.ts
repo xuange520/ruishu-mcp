@@ -25,6 +25,8 @@ export class RuishuCdpClient {
             const u = url.includes('://') ? new URL(url) : new URL(url, 'http://placeholder');
             let found = false;
             u.searchParams.forEach((value, key) => {
+                // [Safety]: Reset lastIndex to prevent stateful RegExp ghost bug if 'g' flag is ever added
+                config.ruishu.tokenKeyPattern.lastIndex = 0;
                 if (config.ruishu.tokenKeyPattern.test(key) && value.length > config.ruishu.tokenMinValueLength) {
                     found = true;
                 }
@@ -40,7 +42,8 @@ export class RuishuCdpClient {
             const u = rawUrl.includes('://') ? new URL(rawUrl) : new URL(rawUrl, 'http://placeholder');
             const keysToRemove: string[] = [];
             u.searchParams.forEach((value, key) => {
-                // Ruishu dynamic token features: use centralized config values
+                // [Safety]: Reset lastIndex to prevent stateful RegExp ghost bug
+                config.ruishu.tokenKeyPattern.lastIndex = 0;
                 if (config.ruishu.tokenKeyPattern.test(key) && value.length > config.ruishu.tokenMinValueLength) {
                     keysToRemove.push(key);
                 }
