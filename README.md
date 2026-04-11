@@ -92,8 +92,11 @@ Add the current MCP service to your AI Agent's configuration file (e.g., Antigra
 Once configured, your AI assistant will gain the following core tools:
 
 1. **`init_ruishu_hook`**: 指挥浏览器锁定目标网站，自动执行 Service Worker 绕过与原型链隐蔽注入，然后刷新页面等待特征校验。 / Instruct the browser to lock onto the target website, automatically execute Service Worker bypass and stealth prototype injection, then refresh the page to wait for feature validation.
+   - **可选参数 / Optional Parameters**: `url_keyword` (目标网页URL特征 / Target URL keyword), `host` (Chrome IP, 默认 / Default `127.0.0.1`), `port` (Chrome 调试端口 / Debug port, 默认 / Default `9222`)
 2. **`execute_page_action`**: 模拟人类交互（鼠标点击、下拉、触发特定 JS 函数），用于激活被动的发包请求。 / Simulate human interaction (mouse clicks, scrolling, triggering specific JS functions) to activate passive request generation.
+   - **必填参数 / Required Parameters**: `js_script` (在页面内执行的 JS 代码 / JavaScript code to execute in the page)
 3. **`get_intercepted_traffic`**: 读取净化后、包含加密明文双重对照的 HTTP 流量栈日志。 / Read the purified HTTP traffic stack logs, which contain a dual-reference of both encrypted and plaintext data.
+   - **可选参数 / Optional Parameters**: `limit` (限制返回的最新记录条数防爆显存 / Number of newest records to retrieve to prevent context explosion)
 
 ---
 
