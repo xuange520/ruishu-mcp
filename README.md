@@ -20,8 +20,8 @@
 
 ### ✨ 核心特性 / Core Features
 
-- **底层协议截获 (CDP Interception)**：绕过大部分前端反逆向机制，直接在浏览器底层嗅探原生网络请求与响应体。
-  *Bypasses most frontend anti-reverse mechanisms by directly sniffing native network requests and response bodies at the browser's lowest layer.*
+- **底层协议截获 (CDP Interception)**：隔离大部分前端环境检测机制，直接在浏览器底层嗅探原生网络请求与响应体。
+  *Isolates from most frontend environment detection mechanisms by directly sniffing native network requests and response bodies at the browser's lowest layer.*
 - **原型链深层 Hook (Deep Prototype Hook)**：智能拦截 XMLHttpRequest 与 Fetch API，精准捕捉被前端 JS 业务层解密后的**第一手真·明文数据**。
   *Intelligently intercepts XMLHttpRequest and Fetch APIs to accurately capture the **first-hand true plaintext data** after decryption by the frontend JS business layer.*
 - **动态令牌自动净化 (Dynamic Token Purification)**：通过智能正则匹配，自动剔除 URL 上的随机防刷令牌 (如 `?abcde123=xxxxxxxxxxxx`)。
@@ -95,8 +95,8 @@ chrome.exe --remote-debugging-port=9222
 一旦配置成功，AI 助手将获得以下三种核心能力（Tools）：
 *Once configured, your AI assistant will gain the following core tools:*
 
-1. **`init_ruishu_hook`**: 指挥浏览器锁定目标网站，自动执行 Service Worker 绕过与原型链隐蔽注入，然后刷新页面等待特征校验。
-   *Instruct the browser to lock onto the target website, automatically execute Service Worker bypass and stealth prototype injection, then refresh the page to wait for feature validation.*
+1. **`init_ruishu_hook`**: 指挥浏览器锁定目标网站，自动执行 Service Worker 脱离与原型链无侵入挂载，然后刷新页面等待特征校验。
+   *Instruct the browser to lock onto the target website, automatically execute Service Worker detachment and non-invasive prototype mounting, then refresh the page to wait for feature validation.*
    - **可选参数 / Optional Parameters**: 
      - `url_keyword`: 目标网页URL特征 / *Target URL keyword*
      - `host`: Chrome IP, 默认 / *Default* `127.0.0.1`
