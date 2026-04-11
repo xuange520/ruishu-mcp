@@ -188,7 +188,7 @@ main().catch(error => {
 
 // ========================== Graceful Shutdown ==========================
 // Ensure CDP WebSocket connections are properly closed when the process is terminated
-// to prevent zombie listeners on Chrome's debug port.
+// to prevent dangling listeners on Chrome's debug port.
 async function gracefulShutdown(signal: string) {
     console.error(`\n[${signal}] Shutting down Ruishu MCP server...`);
     try {

@@ -1,6 +1,6 @@
 /**
  * Generate multi-site universal featureless Ruishu defense line Hook code
- * This code will be injected at the first time before all scripts on the page are executed (Document Creation Phase).
+ * This code will be mounted at the first time before all scripts on the page are executed (Document Creation Phase).
  * 
  * [Core Principle] Only intercept API requests and responses protected by Ruishu dynamic tokens,
  * Do not intercept global methods like JSON.parse/stringify to avoid logging noisy data like Ruishu VM internal scheduling data and third-party statistics.
@@ -8,8 +8,8 @@
 export function getUniversalHook(): string {
     return `
     (function() {
-        if (window.__mcp_injected) return;
-        window.__mcp_injected = true;
+        if (window.__mcp_mounted) return;
+        window.__mcp_mounted = true;
         
         // --- Core data safe ---
         window.__mcp_intercept_queue = window.__mcp_intercept_queue || [];
@@ -201,12 +201,12 @@ export function getUniversalHook(): string {
                 Object.defineProperty(HTMLIFrameElementProto, 'contentWindow', {
                     get: function() {
                         const win = origGet.call(this);
-                        if (win && !win.__mcp_injected) {
+                        if (win && !win.__mcp_mounted) {
                             try {
                                 win.XMLHttpRequest.prototype.open = window.XMLHttpRequest.prototype.open;
                                 win.XMLHttpRequest.prototype.send = window.XMLHttpRequest.prototype.send;
                                 if (win.fetch) win.fetch = window.fetch;
-                                win.__mcp_injected = true;
+                                win.__mcp_mounted = true;
                             } catch(e){}
                         }
                         return win;

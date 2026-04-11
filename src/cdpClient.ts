@@ -54,7 +54,7 @@ export class RuishuCdpClient {
     }
 
     public async connect(urlKeyword: string, host: string, port: number): Promise<string> {
-        // [Security]: Validate host to prevent URL injection attacks from malicious AI input
+        // [Security]: Validate host to prevent URL manipulation from malicious AI input
         if (!config.hostValidationPattern.test(host)) {
             throw new Error(`Invalid host "${host}": only IP addresses and hostnames are allowed.`);
         }
@@ -185,7 +185,7 @@ export class RuishuCdpClient {
         });
         // =================================================================================
 
-        // Global Auto Follow: Listen for any newly popped Tabs or IFRAMEs and inject the probe into them
+        // Global Auto Follow: Listen for any newly popped Tabs or IFRAMEs and mount the probe to them
         Target.attachedToTarget(async (event: any) => {
             try {
                 if (event.targetInfo.type === 'page' || event.targetInfo.type === 'iframe') {
@@ -205,7 +205,7 @@ export class RuishuCdpClient {
         await Network.setCacheDisabled({ cacheDisabled: true });
         await Network.setBypassServiceWorker({ bypass: true });
 
-        // At the earliest possible moment of all Document creation, inject the universal stealth intercept layer (including Proxy and toString override)
+        // At the earliest possible moment of all Document creation, mount the universal transparent diagnostic layer (including Proxy and toString override)
         await Page.addScriptToEvaluateOnNewDocument({
              source: getUniversalHook()
         });
@@ -287,7 +287,7 @@ export class RuishuCdpClient {
             siteDomain = (await Runtime.evaluate({ expression: 'location.hostname' }))?.result?.value || '';
         } catch(e) {}
 
-        return `Universal Ruishu Hook successfully injected! Page reloaded.\nSite Domain: ${siteDomain}\nRuishu Detection: ${ruishuDetection}`;
+        return `Universal Ruishu Hook successfully attached! Page reloaded.\nSite Domain: ${siteDomain}\nRuishu Detection: ${ruishuDetection}`;
     }
 
     public async executeScript(jsScript: string): Promise<string> {
