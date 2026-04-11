@@ -24,6 +24,7 @@
 - **原型链深层 Hook (Deep Prototype Hook)**：智能拦截 XMLHttpRequest 与 Fetch API，精准捕捉被前端 JS 业务层解密后的**第一手真·明文数据**。
 - **动态令牌自动净化 (Dynamic Token Purification)**：通过智能正则匹配，自动剔除 URL 上的随机防刷令牌 (如 `?abcde123=xxxxxxxxxxxx`)。
 - **全域穿透 (Global Hooking)**：支持监控和拦截多 Tab 页、异步生成的 Iframe 内部请求。
+- **实战验证 (Battle-Tested)**：已在 5+ 个受瑞数不同版本引擎防护的真实生产环境中进行打磨与严格验证，均成功实现无感知 Hook，并能 100% 稳定拦截到底层的真实原始发包与解密后的业务响应明文。
 - **AI-Agent 无缝对接 (Seamless AI Agent Integration)**：遵循 MCP 标准，零代码直接外挂到各种 LLM 驱动的自动化工具中。
 
 ---
