@@ -39,7 +39,7 @@
 
 ```bash
 # 1. 克隆代码库 / Clone the repository
-git clone https://github.com/xuange925/ruishu-mcp.git
+git clone https://github.com/xuange520/ruishu-mcp.git
 cd ruishu-mcp
 
 # 2. 安装依赖 / Install dependencies
