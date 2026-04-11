@@ -1,0 +1,26 @@
+{
+  "name": "mcp-ruishu-cdp",
+  "version": "1.0.0",
+  "description": "Universal Ruishu WAF bypass MCP server via Chrome DevTools Protocol",
+  "type": "module",
+  "bin": {
+    "mcp-ruishu-cdp": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc && node -e \"require('fs').chmodSync('dist/index.js', '755')\"",
+    "start": "node dist/index.js"
+  },
+  "files": ["dist"],
+  "keywords": ["mcp", "ruishu", "cdp", "waf-bypass"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "chrome-remote-interface": "^0.34.0"
+  },
+  "devDependencies": {
+    "@types/chrome-remote-interface": "^0.33.0",
+    "@types/node": "^25.5.0",
+    "typescript": "^6.0.2"
+  }
+}
