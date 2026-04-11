@@ -132,3 +132,12 @@ chrome.exe --remote-debugging-port=9222
 
 ## 📄 许可证 / License
 [MIT License](LICENSE) (附加了非商业用途严格限制条款 / *With strict Non-Commercial restriction clauses attached*)
+
+---
+
+## © 版权说明 / Copyright
+
+Copyright (c) 2026 xuange520. All rights reserved.
+
+本项目源代码及相关文档受版权法保护。除开源许可范围内的使用外，未经作者明确书面许可，严禁将本项目用于任何形式的商业变现、恶意闭源封装售卖，或在未署名的情况下进行二次分发。
+*The source code and related documentation of this project are protected by copyright laws. Except for usage within the scope of the open-source license, without explicit written permission from the author, any form of commercial monetization, malicious closed-source packaging for sale, or secondary distribution without attribution is strictly prohibited.*
