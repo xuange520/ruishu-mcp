@@ -13,9 +13,9 @@
 
 ## 📖 简介 / Introduction
 
-**Ruishu MCP CDP** 是一个基于 Model Context Protocol (MCP) 和 Chrome DevTools Protocol (CDP) 构建的无痕流量截获工具。专门用于协助 AI Agent (如基于 LLM 的自动化机器人) 剥离目标网站上复杂的「动态参数令牌防护」机制，自动提取、净化和获取纯净的 API 业务层明文与密文数据。
+**Ruishu MCP** 是一个基于 Model Context Protocol (MCP) 和 Chrome DevTools Protocol (CDP) 构建的无痕流量截获工具。专门用于协助 AI Agent (如基于 LLM 的自动化机器人) 剥离目标网站上复杂的「动态参数令牌防护」机制，自动提取、净化和获取纯净的 API 业务层明文与密文数据。
 
-**Ruishu MCP CDP** is a stealth traffic interception tool built on the Model Context Protocol (MCP) and Chrome DevTools Protocol (CDP). It is specifically designed to assist AI Agents (such as LLM-based automation bots) in stripping complex "dynamic parameter token protection" mechanisms on target websites, automatically extracting, purifying, and fetching pure API business-layer plaintexts and ciphertexts.
+**Ruishu MCP** is a stealth traffic interception tool built on the Model Context Protocol (MCP) and Chrome DevTools Protocol (CDP). It is specifically designed to assist AI Agents (such as LLM-based automation bots) in stripping complex "dynamic parameter token protection" mechanisms on target websites, automatically extracting, purifying, and fetching pure API business-layer plaintexts and ciphertexts.
 
 ### ✨ 核心特性 / Core Features
 
@@ -37,8 +37,8 @@
 
 ```bash
 # 1. 克隆代码库 / Clone the repository
-git clone https://github.com/your-username/ruishu-mcp-cdp.git
-cd ruishu-mcp-cdp
+git clone https://github.com/your-username/ruishu-mcp.git
+cd ruishu-mcp
 
 # 2. 安装依赖 / Install dependencies
 npm install
@@ -78,7 +78,7 @@ Add the current MCP service to your AI Agent's configuration file (e.g., Antigra
   "mcpServers": {
     "ruishu-cdp": {
       "command": "node",
-      "args": ["/absolute/path/to/ruishu-mcp-cdp/dist/index.js"]
+      "args": ["/absolute/path/to/ruishu-mcp/dist/index.js"]
     }
   }
 }
