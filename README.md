@@ -30,8 +30,8 @@
   *Supports monitoring and intercepting requests across multiple tabs and asynchronously generated internal Iframes.*
 - **实战验证 (Battle-Tested)**：已在 5+ 个受瑞数不同版本引擎防护的真实生产环境中进行打磨与严格验证，均成功实现无感知 Hook，并能 100% 稳定拦截到底层的真实原始发包与解密后的业务响应明文。
   *Refined and strictly verified in 5+ real-world production environments protected by different versions of Ruishu engines, successfully achieving imperceptible hooking and 100% stable interception of the underlying authentic original requests and decrypted business response plaintexts.*
-- **AI-Agent 无缝对接 (Seamless AI Agent Integration)**：遵循 MCP 标准，零代码直接外挂到各种 LLM 驱动的自动化工具中。
-  *Follows the MCP standard, directly attachable to various LLM-driven automation tools with zero code.*
+- **万物互联的 AI 引擎生态 (Universal AI Ecosystem Integration)**：严格遵循 Anthropic MCP 标准协议，无需编写任何适配代码，即可作为原生工具 (Tool) 被市面上所有主流 AI IDE 与 Agent 客户端直接调用。支持全线无缝接入：**Cursor, Windsurf, Claude Desktop, Gemini CLI, Antigravity** 等大模型生产力工具。
+  *Strictly compliant with the Anthropic MCP standard protocol, it can be directly invoked as a native Tool by all mainstream AI IDEs and Agent clients on the market without writing any adapter code. Supports seamless integration with a full lineup of LLM productivity tools, including **Cursor, Windsurf, Claude Desktop, Gemini CLI, and Antigravity**.*
 
 ---
 
@@ -76,8 +76,8 @@ chrome.exe --remote-debugging-port=9222
 
 ### 第二步：将工具挂载为 MCP Server / Step 2: Attach as an MCP Server
 
-在你的 AI Agent (比如 Antigravity、Claude Desktop 等) 配置文件中添加当前 MCP 服务：
-*Add the current MCP service to your AI Agent's configuration file (e.g., Antigravity, Claude Desktop):*
+在你的主流 AI 客户端（如 **Claude Desktop, Cursor, Windsurf, Gemini CLI, Antigravity** 等）的 MCP 配置文件中添加当前服务：
+*Add the current MCP service to the MCP configuration file of your mainstream AI client (e.g., **Claude Desktop, Cursor, Windsurf, Gemini CLI, Antigravity**, etc.):*
 
 ```json
 {
