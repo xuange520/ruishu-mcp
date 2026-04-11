@@ -13,7 +13,7 @@
   "files": ["dist"],
   "keywords": ["mcp", "ruishu", "cdp", "waf-bypass"],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
     "chrome-remote-interface": "^0.34.0"

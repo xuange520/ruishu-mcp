@@ -25,7 +25,7 @@ export class RuishuCdpClient {
             const u = url.includes('://') ? new URL(url) : new URL(url, 'http://placeholder');
             let found = false;
             u.searchParams.forEach((value, key) => {
-                if (/^[A-Za-z0-9]{5,12}$/.test(key) && value.length > 40) {
+                if (config.ruishu.tokenKeyPattern.test(key) && value.length > config.ruishu.tokenMinValueLength) {
                     found = true;
                 }
             });
@@ -40,8 +40,8 @@ export class RuishuCdpClient {
             const u = rawUrl.includes('://') ? new URL(rawUrl) : new URL(rawUrl, 'http://placeholder');
             const keysToRemove: string[] = [];
             u.searchParams.forEach((value, key) => {
-                // Ruishu dynamic token features: 5-12 purely alphanumeric key + 40+ chars ciphertext value
-                if (/^[A-Za-z0-9]{5,12}$/.test(key) && value.length > 40) {
+                // Ruishu dynamic token features: use centralized config values
+                if (config.ruishu.tokenKeyPattern.test(key) && value.length > config.ruishu.tokenMinValueLength) {
                     keysToRemove.push(key);
                 }
             });
@@ -51,6 +51,14 @@ export class RuishuCdpClient {
     }
 
     public async connect(urlKeyword: string, host: string, port: number): Promise<string> {
+        // [Security]: Validate host to prevent URL injection attacks from malicious AI input
+        if (!config.hostValidationPattern.test(host)) {
+            throw new Error(`Invalid host "${host}": only IP addresses and hostnames are allowed.`);
+        }
+        if (port < 1 || port > 65535 || !Number.isInteger(port)) {
+            throw new Error(`Invalid port "${port}": must be an integer between 1-65535.`);
+        }
+
         if (this.client) {
             try { await this.client.close(); } catch(e) { /* Old connection might be disconnected, ignore */ }
         }
@@ -192,7 +200,8 @@ export class RuishuCdpClient {
         await Page.reload({ ignoreCache: true });
 
         // Wait for page load completion before automatically detecting Ruishu features
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        // Use configurable timeout instead of hardcoded value, accommodating slow networks
+        await new Promise(resolve => setTimeout(resolve, config.pageLoadTimeoutMs));
         let ruishuDetection = 'Undetected';
         try {
             const detectScript = `

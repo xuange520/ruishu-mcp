@@ -6,6 +6,12 @@ export const config = {
     // Memory queue configuration
     maxRecords: 500, // LRU to prevent memory leak
 
+    // Host input validation: only allow IP addresses and hostnames, block malicious URLs
+    hostValidationPattern: /^[a-zA-Z0-9.\-_]+$/,
+
+    // Page load wait timeout (ms) for Ruishu feature detection after reload
+    pageLoadTimeoutMs: 5000,
+
     // Ruishu universal detection parameters - Universal fingerprint extracted based on cross-site analysis
     ruishu: {
         // Dynamic token URL parameter feature: 5-12 alphanumeric Key + 40+ chars ciphertext Value

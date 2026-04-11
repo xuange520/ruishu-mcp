@@ -130,7 +130,9 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                 let recs: any[] = [];
                 try {
                      recs = JSON.parse(rawStr) || [];
-                } catch(e) {}
+                } catch(e) {
+                     console.error(`[WARN] Failed to parse browser queue data: ${String(rawStr).substring(0, 200)}`);
+                }
 
                 // Append the data natively intercepted by the backend
                 const nodeRecs = cdpClient.nodeInterceptQueue.splice(0, cdpClient.nodeInterceptQueue.length); // Extract and clear
