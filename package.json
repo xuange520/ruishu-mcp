@@ -1,7 +1,7 @@
 {
   "name": "mcp-ruishu-cdp",
   "version": "1.0.0",
-  "description": "Universal Ruishu WAF bypass MCP server via Chrome DevTools Protocol",
+  "description": "基于 MCP 协议的底层遥测引擎：桥接大语言模型与复杂动态网络环境的高维数据感知网关 (Low-level telemetry engine bridging LLMs and dynamic web environments).",
   "type": "module",
   "bin": {
     "mcp-ruishu-cdp": "./dist/index.js"
@@ -11,7 +11,7 @@
     "start": "node dist/index.js"
   },
   "files": ["dist"],
-  "keywords": ["mcp", "ruishu", "cdp", "waf-bypass"],
+  "keywords": ["mcp", "data-pipeline", "cdp", "telemetry", "llm-gateway"],
   "author": "",
   "license": "MIT",
   "dependencies": {
