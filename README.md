@@ -117,99 +117,99 @@ chrome.exe --remote-debugging-port=9222
 ### 1. 核心拓扑系统全景图 (System Topology)
 
 ```mermaid
-flowchart TB
-    %% Definitions
-    subgraph LLM_Tier ["🧠 AI Control Tier (大模型感知与决策层)"]
-        direction LR
-        A_LLM["Large Language Model<br/>(Claude / GPT-4)"]
-        A_Agent["Autonomous Agent<br/>(Agent 执行框架)"]
-        A_LLM <--> A_Agent
-    end
-
-    subgraph MCP_Gateway ["🔌 MCP Telemetry Gateway (遥测与调度网关)"]
-        M_Server{"Model Context Protocol<br/>(服务器核心总线)"}
-        M_Init["[工具] init_ruishu_hook<br/>(管道初始化)"]
-        M_Obs["[工具] get_intercepted_traffic<br/>(流数据观测)"]
-        
-        M_Server --> M_Init
-        M_Server --> M_Obs
-        
-        M_Queue[("Atomic Memory Queue<br/>(原子数据缓冲队列)")]
-    end
-
-    subgraph CDP_Engine ["⚙️ Low-Level Telemetry Engine (底层协议引擎)"]
+flowchart LR
+    %% Styles
+    classDef llm fill:#2b3137,stroke:#24292e,stroke-width:2px,color:#fff,rx:5px,ry:5px
+    classDef gateway fill:#0366d6,stroke:#005cc5,stroke-width:2px,color:#fff,rx:10px,ry:10px
+    classDef cdp fill:#2ea043,stroke:#238636,stroke-width:2px,color:#fff,rx:5px,ry:5px
+    classDef target fill:#d73a49,stroke:#cb2431,stroke-width:2px,color:#fff,rx:5px,ry:5px
+    classDef buffer fill:#6f42c1,stroke:#5a32a3,stroke-width:2px,color:#fff,rx:15px,ry:15px
+    
+    subgraph S1 ["🧠 大模型生态 (LLM Ecosystem)"]
         direction TB
-        C_Injector["Pipeline Injector<br/>(环境参数探针挂载)"]
-        C_Network["Protocol Monitor<br/>(全双工网络事件监听)"]
-        C_Network_Res["State Extractor<br/>(动态状态机还原)"]
+        A1["🤖 AI Agent (执行代理)"]:::llm
+        A2["✨ Base LLM (大模型底座)"]:::llm
+        A1 <--> A2
     end
 
-    subgraph Dynamic_Env ["🌐 Complex Dynamic Environment (异构复杂目标环境)"]
-        direction LR
-        W_Browser["Headless Runtime<br/>(V8 执行容器)"]
-        W_State["Frontend State Machine<br/>(前端复杂态逻辑)"]
-        W_API["Upstream Endpoints<br/>(业务线真实终点)"]
+    subgraph S2 ["🔌 MCP 调度网关 (Telemetry Gateway)"]
+        direction TB
+        M_Bus{"🌐 MCP 服务总线"}:::gateway
+        M_T1["⚙️ init_hook (探针初始化)"]:::gateway
+        M_T2["🔎 get_traffic (流数据读取)"]:::gateway
+        M_Bus --- M_T1 & M_T2
         
-        W_Browser --> W_State
-        W_State --> W_API
+        Q[("📦 原子队列 (Memory Queue)")]:::buffer
     end
 
-    %% Connections
-    A_Agent == "JSON-RPC (标准化调用)" ==> M_Server
+    subgraph S3 ["🔍 底层隔离引擎 (CDP Engine)"]
+        direction TB
+        C1["💉 注入层 (Injector)"]:::cdp
+        C2["📡 侦听层 (Network Monitor)"]:::cdp
+        C3["🧩 重构层 (State Extractor)"]:::cdp
+    end
+
+    subgraph S4 ["🌐 动态重灾区 (Target Environment)"]
+        direction TB
+        T1["🖥️ Headless V8 (底层容器)"]:::target
+        T2["⚠️ 异构前端状态机 (防护核心)"]:::target
+        T1 --> T2
+    end
+
+    %% Routing
+    A1 == "JSON-RPC 协议调用" ==> M_Bus
     
-    M_Init -- "注册钩子" --> C_Injector
-    C_Injector -- "(在脚本执行前) 强行注压探针" --> W_Browser
+    M_T1 -. "分配系统系统探针任务" .-> C1
+    C1 -- "底层注入挂载 (绕开常规检测)" --> T1
     
-    W_Browser -. "事件轮询" .-> C_Network
-    W_Browser -. "事件轮询" .-> C_Network_Res
+    T2 -- "网络流出口触发" --> C2
+    T2 -- "保护协议状态拦截" --> C3
     
-    C_Network -- "提取高保真请求头" --> M_Queue
-    C_Network_Res -- "清洗并重构载荷" --> M_Queue
+    C2 -- "提取异构路由 Token" --> Q
+    C3 -- "还原为高保真 Payload" --> Q
     
-    M_Obs -- "消费与熔断" --> M_Queue
-    M_Queue -- "Pure JSON 数据流" --> M_Server
-    
-    %% Styling
-    classDef primary fill:#1e40af,stroke:#60a5fa,stroke-width:2px,color:#fff
-    classDef secondary fill:#047857,stroke:#34d399,stroke-width:2px,color:#fff
-    classDef warning fill:#b45309,stroke:#fbbf24,stroke-width:2px,color:#fff
-    classDef abstract fill:#4c1d95,stroke:#8b5cf6,stroke-width:2px,color:#fff
-    
-    class M_Server,M_Init,M_Obs primary
-    class C_Injector,C_Network,C_Network_Res secondary
-    class W_Browser,W_State,W_API warning
-    class A_LLM,A_Agent abstract
+    M_T2 -- "消费级数据拉取与队列清空" --> Q
 ```
 
 ### 2. 时序数据流转生命周期 (Data Pipeline Sequence)
 
 ```mermaid
 sequenceDiagram
-    participant LLM as AI 大模型调度器
-    participant MCP as MCP 数据管道网关
-    participant CDP as CDP 探针执行引擎
-    participant Browser as 多状态虚拟机目标环境
+    autonumber
+    box rgb(40, 44, 52) "LLM 生态 (Client)"
+        participant LLM as 🤖 AI 大模型
+    end
+    box rgb(33, 56, 85) "中间层数据架构 (Server)"
+        participant MCP as 🔌 MCP 调度网关
+        participant CDP as ⚙️ 底层探针引擎
+        participant Q as 📦 内存重构隔离区
+    end
+    box rgb(66, 32, 32) "全黑盒防护环境 (Sandbox)"
+        participant Target as 🌐 目标前端态虚拟机
+    end
+
+    == 阶段一：高维环境突破与探针初始化 (Pipeline Injection) ==
+    LLM->>MCP: 推送发卡指令：init_ruishu_hook()
+    MCP->>CDP: 分配底层系统资源 (Websocket 连接池)
+    CDP->>Target: 下发防御隔离策略：Bypass 缓存与多方代理
+    CDP->>Target: 执行前置硬性挂库挂载 (Runtime.evaluate)
+    Target-->>CDP: 节点证实完毕且隐蔽潜伏 (规避业务层检测)
+    MCP-->>LLM: ✅ 高维环境节点挂载验证成功
     
-    note over LLM,Browser: 阶段 1: 高维环境的突破与探针初始化 (Pipeline Initialization)
-    LLM->>MCP: 派发调度任务: init_ruishu_hook()
-    MCP->>CDP: 初始化 WebSocket 深层底座连接
-    CDP->>Browser: 剥离代理: Bypass Cache & ServiceWorkers
-    CDP->>Browser: [Document Created] 层级执行探针挂库 (Runtime.evaluate)
-    Browser-->>CDP: 证实挂载完成 (不触发业务层级报警)
-    MCP-->>LLM: 返回系统挂载验证成功信息
+    == 阶段二：动态协议重构与脱壳采集 (Cross-layer Extraction) ==
+    Target->>Target: 执行极其复杂的内部业务加密状态转换运算
+    Target->>CDP: 网络层流量出口触网 (requestWillBeSent)
+    CDP->>Q: 全速截获并剥离异构拓扑特征的 Routing Token
+    Target->>CDP: 网络层数据流回执拦截 (responseReceived)
+    CDP->>CDP: 触发无损深层解复用与聚合 (getResponseBody)
+    CDP->>Q: 将解密完毕的高保真 JSON 数据归档存入原子缓冲池
     
-    note over MCP,Browser: 阶段 2: 动态状态机的无损重叠提取 (Asynchronous State Extraction)
-    Browser->>Browser: 容器内触发内部复杂计算 (VM 环境调度执行)
-    Browser->>CDP: 网络协议触发 (Network.requestWillBeSent)
-    CDP->>MCP: 基于拓扑特征清洗提取业务 Token Keys
-    Browser->>CDP: 回传受保护状态 (Network.responseReceived)
-    CDP->>CDP: 触发异步报文无损提取策略 (getResponseBody)
-    CDP->>MCP: 聚合加密前后的 High-Fidelity (高保真) 状态值送入缓冲
-    
-    note over LLM,MCP: 阶段 3: 并发内存消费与输出 (Data Observation)
-    LLM->>MCP: 唤起数据拉取任务: get_intercepted_traffic()
-    MCP->>MCP: 锁定并清空内存队列 (避免历史状态污染)
-    MCP-->>LLM: 投递格式化纯净 JSON 业务数据集
+    == 阶段三：非阻塞并发数据收割机制 (Safe Observation) ==
+    LLM->>MCP: 异步轮询/被动触发数据拉取：get_intercepted_traffic()
+    MCP->>Q: 校验状态并请求读取目前沉淀的所有数据集
+    Q-->>MCP: 分发数据阵列游标
+    MCP->>Q: 执行熔断清空策略以释放环境极危内存空间
+    MCP-->>LLM: 🚀 投递并输送规整脱壳完毕的高质量原始业务结果集
 ```
 
 ### 3. 架构设计原理解析 (Architecture Theory)
