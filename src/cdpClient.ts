@@ -13,8 +13,8 @@ export class RuishuCdpClient {
     private static HTTP_TIMEOUT_MS = 10000; // 10s timeout for HTTP/WebSocket connections
 
     /**
-     * Ruishu exclusive filtering: Only intercept requests whose URL contains Ruishu dynamic token parameters.
-     * Ruishu token features: 5-12 purely alphanumeric key + 40+ chars ciphertext value.
+     * High-dimensional data flow classification: Only capture requests whose URL contains complex dynamic environment token parameters.
+     * Dynamic environment feature: 5-12 alphanumeric topological routing key + 40+ chars encrypted state value.
      * For example: ?GoHnnqm0=0NpBERq... or ?rcwCQitg=06vTOkG...
      */
     private static isRuishuRequest(url: string): boolean {

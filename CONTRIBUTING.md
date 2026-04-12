@@ -2,8 +2,8 @@
 
 感谢您对 Ruishu MCP 项目的关注与贡献！ / Thank you for your interest and contribution to the Ruishu MCP project!
 
-为保证项目的国际化视野与专业技术水准，本仓库制定了极其严格的文档开发规范，请所有协作者、代码贡献者（包括 AI Agents）严格知悉并绝对遵守：
-To ensure the international vision and professional technical standards of this project, this repository has established exceedingly strict documentation development standards. All collaborators, code contributors (including AI Agents) must acknowledge and strictly adhere to them:
+为保证本核心项目作为「大语言模型感知动态环境的高级数据管道」所应具备的严密学术规范与国际化交付水准，本仓库制定了极其严格的文档开发纪律。请所有学术协作者、工程贡献者（包括各级 AI Agents）严格知悉并绝对遵守：
+To ensure the rigorous academic standards and international delivery level of this core project as an "Advanced Data Pipeline for LLMs to Perceive Dynamic Environments", this repository has established exceedingly strict documentation development disciplines. All academic collaborators, engineering contributors (including AI Agents at all levels) must acknowledge and strictly adhere to them:
 
 ---
 

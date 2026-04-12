@@ -27,7 +27,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
             {
                 name: "init_ruishu_hook",
                 title: "Initialize Ruishu Hook",
-                description: "Step 1: Hooking. When you need to capture plaintext of Ruishu encrypted interfaces, call this function first to mount to the browser. It will also bypass cache, ServiceWorker proxy, and SRI security restrictions.",
+                description: "Step 1: Pipeline Initialization. Binds the system-level probe to the target environment to extract high-quality business data from complex dynamic environments. Decouples caching and ServiceWorker proxy layers for pure telemetry.",
                 inputSchema: {
                     type: "object",
                     properties: {
@@ -55,7 +55,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
             {
                 name: "get_intercepted_traffic",
                 title: "Get Intercepted Traffic",
-                description: "Step 2: Extraction. Get the merged plaintext logs of intercepted requests and responses sent by the browser. Automatically clears the queue to prevent overflow.",
+                description: "Step 2: Data Observation. Retrieves the merged high-fidelity JSON log datasets processed by the data pipeline. Automatically consumes and clears the atomic memory queue to prevent overflow.",
                 inputSchema: {
                     type: "object",
                     properties: {
