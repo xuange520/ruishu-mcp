@@ -114,6 +114,106 @@ chrome.exe --remote-debugging-port=9222
 
 ## 🧠 数据流转架构设计 / Data Pipeline Architecture
 
+### 1. 核心拓扑系统全景图 (System Topology)
+
+```mermaid
+flowchart TB
+    %% Definitions
+    subgraph LLM_Tier ["🧠 AI Control Tier (大模型感知与决策层)"]
+        direction LR
+        A_LLM["Large Language Model<br/>(Claude / GPT-4)"]
+        A_Agent["Autonomous Agent<br/>(Agent 执行框架)"]
+        A_LLM <--> A_Agent
+    end
+
+    subgraph MCP_Gateway ["🔌 MCP Telemetry Gateway (遥测与调度网关)"]
+        M_Server{"Model Context Protocol<br/>(服务器核心总线)"}
+        M_Init["[工具] init_ruishu_hook<br/>(管道初始化)"]
+        M_Obs["[工具] get_intercepted_traffic<br/>(流数据观测)"]
+        
+        M_Server --> M_Init
+        M_Server --> M_Obs
+        
+        M_Queue[("Atomic Memory Queue<br/>(原子数据缓冲队列)")]
+    end
+
+    subgraph CDP_Engine ["⚙️ Low-Level Telemetry Engine (底层协议引擎)"]
+        direction TB
+        C_Injector["Pipeline Injector<br/>(环境参数探针挂载)"]
+        C_Network["Protocol Monitor<br/>(全双工网络事件监听)"]
+        C_Network_Res["State Extractor<br/>(动态状态机还原)"]
+    end
+
+    subgraph Dynamic_Env ["🌐 Complex Dynamic Environment (异构复杂目标环境)"]
+        direction LR
+        W_Browser["Headless Runtime<br/>(V8 执行容器)"]
+        W_State["Frontend State Machine<br/>(前端复杂态逻辑)"]
+        W_API["Upstream Endpoints<br/>(业务线真实终点)"]
+        
+        W_Browser --> W_State
+        W_State --> W_API
+    end
+
+    %% Connections
+    A_Agent == "JSON-RPC (标准化调用)" ==> M_Server
+    
+    M_Init -- "注册钩子" --> C_Injector
+    C_Injector -- "(在脚本执行前) 强行注压探针" --> W_Browser
+    
+    W_Browser -. "事件轮询" .-> C_Network
+    W_Browser -. "事件轮询" .-> C_Network_Res
+    
+    C_Network -- "提取高保真请求头" --> M_Queue
+    C_Network_Res -- "清洗并重构载荷" --> M_Queue
+    
+    M_Obs -- "消费与熔断" --> M_Queue
+    M_Queue -- "Pure JSON 数据流" --> M_Server
+    
+    %% Styling
+    classDef primary fill:#1e40af,stroke:#60a5fa,stroke-width:2px,color:#fff
+    classDef secondary fill:#047857,stroke:#34d399,stroke-width:2px,color:#fff
+    classDef warning fill:#b45309,stroke:#fbbf24,stroke-width:2px,color:#fff
+    classDef abstract fill:#4c1d95,stroke:#8b5cf6,stroke-width:2px,color:#fff
+    
+    class M_Server,M_Init,M_Obs primary
+    class C_Injector,C_Network,C_Network_Res secondary
+    class W_Browser,W_State,W_API warning
+    class A_LLM,A_Agent abstract
+```
+
+### 2. 时序数据流转生命周期 (Data Pipeline Sequence)
+
+```mermaid
+sequenceDiagram
+    participant LLM as AI 大模型调度器
+    participant MCP as MCP 数据管道网关
+    participant CDP as CDP 探针执行引擎
+    participant Browser as 多状态虚拟机目标环境
+    
+    note over LLM,Browser: 阶段 1: 高维环境的突破与探针初始化 (Pipeline Initialization)
+    LLM->>MCP: 派发调度任务: init_ruishu_hook()
+    MCP->>CDP: 初始化 WebSocket 深层底座连接
+    CDP->>Browser: 剥离代理: Bypass Cache & ServiceWorkers
+    CDP->>Browser: [Document Created] 层级执行探针挂库 (Runtime.evaluate)
+    Browser-->>CDP: 证实挂载完成 (不触发业务层级报警)
+    MCP-->>LLM: 返回系统挂载验证成功信息
+    
+    note over MCP,Browser: 阶段 2: 动态状态机的无损重叠提取 (Asynchronous State Extraction)
+    Browser->>Browser: 容器内触发内部复杂计算 (VM 环境调度执行)
+    Browser->>CDP: 网络协议触发 (Network.requestWillBeSent)
+    CDP->>MCP: 基于拓扑特征清洗提取业务 Token Keys
+    Browser->>CDP: 回传受保护状态 (Network.responseReceived)
+    CDP->>CDP: 触发异步报文无损提取策略 (getResponseBody)
+    CDP->>MCP: 聚合加密前后的 High-Fidelity (高保真) 状态值送入缓冲
+    
+    note over LLM,MCP: 阶段 3: 并发内存消费与输出 (Data Observation)
+    LLM->>MCP: 唤起数据拉取任务: get_intercepted_traffic()
+    MCP->>MCP: 锁定并清空内存队列 (避免历史状态污染)
+    MCP-->>LLM: 投递格式化纯净 JSON 业务数据集
+```
+
+### 3. 架构设计原理解析 (Architecture Theory)
+
 1. **CDP Telemetry Layer (协议层遥测探测框架)**
    系统通过深度利用 `Network.requestWillBeSent` 和 `Network.responseReceived` 在内核级监听底层字节流交互，解决前端逻辑动态加密造成的高维物理黑盒问题。它彻底展现了我对于现代浏览器内核通讯协议极深的工程驾驭能力。
    *The system listens to the underlying byte stream interactions at the kernel level via `Network.requestWillBeSent` and `Network.responseReceived`, resolving the high-dimensional physical black-box problem caused by frontend dynamic encryption logic.*
