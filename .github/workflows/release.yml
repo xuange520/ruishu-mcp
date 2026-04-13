@@ -31,12 +31,17 @@ jobs:
       - name: 🏗️ Build Project
         run: npm run build
 
-      # 这一步非常加分：它能够自动将源码打包，如果未来有二进制产物也可以配置到这里
+      # 提取 CHANGELOG.md 中对应当前版本的内容
+      - name: 📝 Extract Release Notes
+        id: extract-release-notes
+        uses: ffurrer2/extract-release-notes@v2
+
+      # 自动将源码打包，并将提取出的日志注入到发布页面
       - name: 🚀 Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          name: Release ${{ github.ref_name }} # 将 Tag 名直接作为标题
-          generate_release_notes: true # 极具学术化：自动汇总 Commit 生成排版优美的 Release Note
+          name: God-Mode Sandwich Architecture Release (${{ github.ref_name }})
+          body: ${{ steps.extract-release-notes.outputs.release_notes }}
           # files: dist/* # 如果后期我们想单独挂载编译后的构建物，取消注释这里就行
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Github自动注入的安全令牌，无需你操心
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Github自动注入的安全令牌
