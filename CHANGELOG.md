@@ -2,13 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v1.1.0] - God-Mode Sandwich Architecture Release
-
-This major infrastructure upgrade achieves dual-track data telemetry across complex dynamic encryption environments. By implementing a highly-privileged prototype redefinition mechanism, it safely penetrates front-end confinement without interfering with the underlying defense systems.
-*本版本实现了重大的底层架构跨越。针对动态加密防护，通过底层的原型链重定义拦截机制，安全突破了同构环境封闭防线，实现了纯净原始环境与动态加密环境的双轨数据采集。*
-
+## [1.1.1] - 2026-04-13
 ### 🚀 Features | 核心体系演进
-
 * **Sandwich Hook Architecture (夹心探针架构)**: Refactored the interception strategy to use global `Object.defineProperty` monitoring. When protective engines attempt to override native hooks, the agent automatically captures and wraps their functions, establishing a clean "Native API -> Plaintext Probe -> Encryption Engine -> Ciphertext Probe -> Network Stack" topology.
   *(弃用原始的定时器轮询策略，重构为全局级别的 Object.defineProperty 代理，利用“上帝视角”当场劫持第三方环境注入并实施反封装。构建了从业务真实明文到网络真实密文的完整验证拓扑。)*
 * **Plaintext Extractor (明文重塑链路)**: Perfectly resolves dynamic interference, enabling complete reconstruction of native API request headers, unencrypted payloads, and clean URIs. Provides absolute pristine human-level data for subsequent LLM processing.
@@ -17,7 +12,6 @@ This major infrastructure upgrade achieves dual-track data telemetry across comp
   *(新增了请求头的拦截环境监听，确保原生业务调度（如 Axios/Fetch）写入的关键状态可追踪，不受远端动态脚本二次污染。)*
 
 ### 🐛 Bug Fixes | 系统稳定性修复
-
 * **AST Barrier Consolidation (抽象语法树屏障修复)**: Fixed a rare but critical structural escape vulnerability in `hooks.ts`. Repaired an unclosed `try-catch` scope in the legacy iframe isolation logic, preventing phase 2 telemetry probes from being permanently locked out during DOM exceptions.
   *(修复了潜伏在核心探针中的异常域锁死级 Bug。重新梳理 AST，补充了对 IFrame 沙盒跳脱过程中抛出的异常闭环，确保高并发网络下的探针存活率。)*
 
