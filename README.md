@@ -114,6 +114,10 @@ chrome.exe --remote-debugging-port=9222
 
 ## 🧠 数据流转架构设计 / Data Pipeline Architecture
 
+<div align="center">
+  <img src="./architecture_diagram_cn.png" alt="系统全景架构图 / System Architecture Diagram" width="800"/>
+</div>
+
 1. **CDP Telemetry Layer (协议层遥测探测框架)**
    系统通过深度利用 `Network.requestWillBeSent` 和 `Network.responseReceived` 在内核级监听底层字节流交互，解决前端逻辑动态加密造成的高维物理黑盒问题。它彻底展现了我对于现代浏览器内核通讯协议极深的工程驾驭能力。
    *The system listens to the underlying byte stream interactions at the kernel level via `Network.requestWillBeSent` and `Network.responseReceived`, resolving the high-dimensional physical black-box problem caused by frontend dynamic encryption logic.*
@@ -123,6 +127,17 @@ chrome.exe --remote-debugging-port=9222
 3. **Atomic Memory Transport (原子级内存安全传输结构)**
    针对大体量并发环境下的运行时时序错位问题，系统创造性地利用底层 Microtask Event Loop (微任务队列) 与独立分配的全局双向隔离区结构，构建了一条具有极高容错性的数据原子化汇聚网络。这体现了构建健壮分布式数据系统的严密学术思维。
    *Addressing the issue of runtime sequence misalignment under massive concurrency environments, the system creatively utilizes the underlying Microtask Event Loop and independently allocated global bidirectional isolator structures to build an atomically convergent network with extremely high fault tolerance.*
+
+---
+
+## 💬 学术研讨与交流 / Contact & Communication
+
+欢迎添加作者微信，进入底层网络协议分析与大模型 AI Agent 自动化技术的专属研讨群进行深度学术交流。
+*Welcome to add the author's WeChat to join the exclusive discussion group focusing on underlying network protocol analysis and LLM AI Agent automation technologies for deep academic exchange.*
+
+<div align="center">
+  <img src="./wechat.jpg" alt="WeChat / 微信技术交流" width="300"/>
+</div>
 
 ---
 
