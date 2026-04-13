@@ -40,7 +40,7 @@ jobs:
       - name: 🚀 Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          name: God-Mode Sandwich Architecture Release (${{ github.ref_name }})
+          name: Ruishu MCP ${{ github.ref_name }}
           body: ${{ steps.extract-release-notes.outputs.release_notes }}
           # files: dist/* # 如果后期我们想单独挂载编译后的构建物，取消注释这里就行
         env:
