@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.1.1] - 2026-04-13
+## [1.1.2] - 2026-04-13
 ### 🚀 Features | 核心体系演进
 * **Sandwich Hook Architecture (夹心探针架构)**: Refactored the interception strategy to use global `Object.defineProperty` monitoring. When protective engines attempt to override native hooks, the agent automatically captures and wraps their functions, establishing a clean "Native API -> Plaintext Probe -> Encryption Engine -> Ciphertext Probe -> Network Stack" topology.
   *(弃用原始的定时器轮询策略，重构为全局级别的 Object.defineProperty 代理，利用“上帝视角”当场劫持第三方环境注入并实施反封装。构建了从业务真实明文到网络真实密文的完整验证拓扑。)*

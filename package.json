@@ -1,6 +1,6 @@
 {
   "name": "mcp-ruishu-cdp",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "基于 MCP 协议的底层遥测引擎：桥接大语言模型与复杂动态网络环境的高维数据感知网关 (Low-level telemetry engine bridging LLMs and dynamic web environments).",
   "type": "module",
   "bin": {
