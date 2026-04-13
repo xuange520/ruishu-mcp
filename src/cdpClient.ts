@@ -150,7 +150,8 @@ export class RuishuCdpClient {
                         url: RuishuCdpClient.stripRuishuParam(params.request.url),
                         rawUrl: params.request.url,
                         postData: params.request.postData || "",
-                        method: params.request.method
+                        method: params.request.method,
+                        headers: params.request.headers || {}
                     });
                 }
             } catch(e) {}

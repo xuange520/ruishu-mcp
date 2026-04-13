@@ -1,6 +1,6 @@
 {
   "name": "mcp-ruishu-cdp",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "基于 MCP 协议的底层遥测引擎：桥接大语言模型与复杂动态网络环境的高维数据感知网关 (Low-level telemetry engine bridging LLMs and dynamic web environments).",
   "type": "module",
   "bin": {
@@ -10,8 +10,17 @@
     "build": "tsc && node -e \"require('fs').chmodSync('dist/index.js', '755')\"",
     "start": "node dist/index.js"
   },
-  "files": ["dist"],
-  "keywords": ["mcp", "data-pipeline", "cdp", "telemetry", "llm-gateway", "rs-reverse"],
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "mcp",
+    "data-pipeline",
+    "cdp",
+    "telemetry",
+    "llm-gateway",
+    "rs-reverse"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {

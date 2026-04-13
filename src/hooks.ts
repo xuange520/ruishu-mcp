@@ -216,6 +216,72 @@ export function getUniversalHook(): string {
             }
         } catch(e) {}
 
+        // ====================================================================
+        // Phase 2: Sandwich Upper-Layer Plaintext Capture (Object.defineProperty Hook)
+        // Since Ruishu uses Object.defineProperty to bypass setters, we hook Object.defineProperty itself!
+        // ====================================================================
+        const _phase1Open = XMLHttpRequest.prototype.open;
+        const _phase1Send = XMLHttpRequest.prototype.send;
+        
+        // --- Interceptor 4: setRequestHeader tracking (must run before open/send hook) ---
+        const _origSetHeader = XMLHttpRequest.prototype.setRequestHeader;
+        XMLHttpRequest.prototype.setRequestHeader = function(name, value) {
+            try {
+                if (this._plaintextHeaders) {
+                    this._plaintextHeaders[name] = value;
+                }
+            } catch(e) {}
+            return _origSetHeader.apply(this, arguments);
+        };
+        hookSignatures.set(XMLHttpRequest.prototype.setRequestHeader, originalToString.call(_origSetHeader));
+
+        const _origDefineProperty = Object.defineProperty;
+        Object.defineProperty = function(obj, prop, descriptor) {
+            // Detect when Ruishu tries to redefine XHR prototype methods
+            if (obj === XMLHttpRequest.prototype) {
+                if (prop === 'open' || prop === 'send') {
+                    if (descriptor && 'value' in descriptor && typeof descriptor.value === 'function') {
+                        const ruishuFn = descriptor.value;
+                        
+                        if (prop === 'open') {
+                            const upperOpenHook = function(method, url) {
+                                this._plaintextUrl = String(url);
+                                this._plaintextMethod = String(method);
+                                this._plaintextHeaders = {};
+                                try {
+                                    _pushLog("xhr_plaintext_open", _origStringify.call(JSON, {
+                                        method: method,
+                                        url: String(url)
+                                    }));
+                                } catch(e) {}
+                                return ruishuFn.apply(this, arguments);
+                            };
+                            hookSignatures.set(upperOpenHook, originalToString.call(ruishuFn));
+                            descriptor.value = upperOpenHook;
+                        } 
+                        else if (prop === 'send') {
+                            const upperSendHook = function(body) {
+                                try {
+                                    if (this._plaintextUrl && body && typeof body === 'string' && body.length > 2) {
+                                        _pushLog("xhr_plaintext_send", _origStringify.call(JSON, {
+                                            url: this._plaintextUrl,
+                                            body: body,
+                                            headers: this._plaintextHeaders || {}
+                                        }));
+                                    }
+                                } catch(e) {}
+                                return ruishuFn.apply(this, arguments);
+                            };
+                            hookSignatures.set(upperSendHook, originalToString.call(ruishuFn));
+                            descriptor.value = upperSendHook;
+                        }
+                    }
+                }
+            }
+            return _origDefineProperty.call(this, obj, prop, descriptor);
+        };
+        hookSignatures.set(Object.defineProperty, originalToString.call(_origDefineProperty));
+
     })();
     `;
 }
