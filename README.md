@@ -114,9 +114,13 @@ chrome.exe --remote-debugging-port=9222
 
 ## 🧠 数据流转架构设计 / Data Pipeline Architecture
 
+<br>
+
 <div align="center">
   <img src="./architecture_diagram_cn.png" alt="系统全景架构图 / System Architecture Diagram" width="800"/>
 </div>
+
+<br>
 
 1. **CDP Telemetry Layer (协议层遥测探测框架)**
    系统通过深度利用 `Network.requestWillBeSent` 和 `Network.responseReceived` 在内核级监听底层字节流交互，解决前端逻辑动态加密造成的高维物理黑盒问题。它彻底展现了我对于现代浏览器内核通讯协议极深的工程驾驭能力。
@@ -135,9 +139,13 @@ chrome.exe --remote-debugging-port=9222
 欢迎添加作者微信，进入底层网络协议分析与大模型 AI Agent 自动化技术的专属研讨群进行深度学术交流。
 *Welcome to add the author's WeChat to join the exclusive discussion group focusing on underlying network protocol analysis and LLM AI Agent automation technologies for deep academic exchange.*
 
+<br>
+
 <div align="center">
   <img src="./wechat.jpg" alt="WeChat / 微信技术交流" width="300"/>
 </div>
+
+<br>
 
 ---
 
