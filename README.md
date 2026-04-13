@@ -117,7 +117,7 @@ chrome.exe --remote-debugging-port=9222
 <br>
 
 <div align="center">
-  <img src="./architecture_diagram_cn.svg" alt="系统全景架构图 / System Architecture Diagram" width="800"/>
+  <img src="./architecture_diagram_cn.svg" alt="系统全景架构图 / System Architecture Diagram" width="100%"/>
 </div>
 
 <br>
