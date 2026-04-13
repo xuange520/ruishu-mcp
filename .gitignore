@@ -1,4 +1,4 @@
-﻿# Logs
+# Logs
 logs
 *.log
 npm-debug.log*
@@ -88,3 +88,4 @@ out
 
 ruishu-mcp-底层原理分析.md
 GITHUB_RELEASE_RULE.md
+*.drawio
