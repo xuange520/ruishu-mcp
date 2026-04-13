@@ -86,7 +86,7 @@ web_modules/
 .next
 out
 
-ruishu-mcp-底层原理分析.md
-ruishu_defense_penetration_layers.md
-GITHUB_RELEASE_RULE.md
+docs/ruishu-mcp-底层原理分析.md
+docs/ruishu_defense_penetration_layers.md
+docs/GITHUB_RELEASE_RULE.md
 *.drawio
