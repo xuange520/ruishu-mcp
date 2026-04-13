@@ -1,0 +1,42 @@
+name: Auto Release Pipeline
+
+on:
+  push:
+    tags:
+      - 'v*' # 仅在推送形如 v1.0.0, v1.1.0 的 Tag 时触发
+
+permissions:
+  contents: write # 必须权限：允许创建 Release 和上传资源
+
+jobs:
+  build-and-release:
+    name: Build & Auto Release
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # 获取完整历史以生成准确的发布说明
+
+      - name: ⚙️ Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: 📦 Install Dependencies
+        run: npm ci
+
+      - name: 🏗️ Build Project
+        run: npm run build
+
+      # 这一步非常加分：它能够自动将源码打包，如果未来有二进制产物也可以配置到这里
+      - name: 🚀 Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Release ${{ github.ref_name }} # 将 Tag 名直接作为标题
+          generate_release_notes: true # 极具学术化：自动汇总 Commit 生成排版优美的 Release Note
+          # files: dist/* # 如果后期我们想单独挂载编译后的构建物，取消注释这里就行
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Github自动注入的安全令牌，无需你操心
