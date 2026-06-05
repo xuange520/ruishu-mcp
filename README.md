@@ -1,7 +1,7 @@
 # Ruishu MCP: Bridging the Gap between LLMs and Dynamic Real-World Data
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/xuange520/ruishu-mcp)
 [![Anthropic MCP](https://img.shields.io/badge/Anthropic-MCP%20Compliant-blueviolet.svg)](https://modelcontextprotocol.io)
 
 > **⚠️ 免责声明 / Disclaimer**
