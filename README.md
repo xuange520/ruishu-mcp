@@ -117,7 +117,7 @@ chrome.exe --remote-debugging-port=9222
 <br>
 
 <div align="center">
-  <img src="./architecture_diagram_cn.png" alt="系统全景架构图 / System Architecture Diagram" width="100%"/>
+  <img src="architecture_diagram_cn.png" alt="系统全景架构图 / System Architecture Diagram" width="100%"/>
 </div>
 
 <br>
@@ -142,7 +142,7 @@ chrome.exe --remote-debugging-port=9222
 <br>
 
 <div align="center">
-  <img src="./wechat.jpg" alt="WeChat / 微信技术交流" width="300"/>
+  <img src="wechat.jpg" alt="WeChat / 微信技术交流" width="300"/>
 </div>
 
 <br>
