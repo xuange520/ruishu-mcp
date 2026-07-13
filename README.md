@@ -4,11 +4,19 @@
 [![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/xuange520/ruishu-mcp)
 [![Anthropic MCP](https://img.shields.io/badge/Anthropic-MCP%20Compliant-blueviolet.svg)](https://modelcontextprotocol.io)
 
-> **⚠️ 免责声明 / Disclaimer**
+> **💼 商业合作与技术支持 / Commercial Collaboration & Support**
 > 
-> 本项目属于高度复合型学术与工程研究成果，旨在探讨复杂动态网络环境下的异构数据流转机制，**不得用于任何商业与违法用途**。使用者若将其用于非法业务或恶意操作，后果由使用者自行承担，作者不承担任何连带责任。
+> 本开源版本仅展示项目的核心架构与基础通联能力。在真实的复杂动态网络环境中，要实现**高并发**、**高可用**且**长期稳定**的数据提取，需要大量的底层调优与对抗策略维护。
+> 
+> 我们为您提供开箱即用的**企业级定制方案**。如果您有明确的商业数据采集需求、需要构建稳定的企业级数据管道，或需要深度的**付费技术咨询与定制化开发**，非常欢迎与我联系探讨商务合作（添加好友时请务必备注：**商业合作** 或 **付费咨询**，并附带简单需求）。
+> 
+> *注：技术有价，精力有限。为了把最高效的服务提供给商业客户，本人暂不提供免费的个人基础答疑、环境配置指导和无偿技术支持。感谢各位老板的理解与尊重！*
 >
-> *This project is a highly complex academic and engineering research achievement, aimed at exploring heterogeneous data pipeline mechanisms under complex dynamic web environments. **It must NOT be used for any commercial or illegal purposes.** Any consequences arising from using this tool for illegal activities will be borne solely by the user. The author assumes no liability.*
+> *This open-source repository demonstrates our core architectural capabilities. Achieving **high concurrency, high availability, and long-term stability** in real-world complex dynamic environments requires significant low-level tuning and continuous strategy maintenance.*
+> 
+> *We offer out-of-the-box **enterprise-grade custom solutions**. If you have clear commercial data integration needs, require a robust enterprise data pipeline, or need **paid in-depth technical support and custom development**, we warmly welcome commercial inquiries (Please include "**Commercial Project**" or "**Paid Consulting**" with a brief summary of your needs when reaching out).* 
+> 
+> *Note: Technical expertise has value, and bandwidth is limited. To ensure the highest quality of service for our commercial clients, free troubleshooting, environment setup guidance, and unpaid support are not provided. Thank you for respecting our time and expertise!*
 
 ---
 
